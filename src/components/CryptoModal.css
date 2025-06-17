@@ -1,28 +1,31 @@
+/* ==== Backdrop overlay for modal ==== */
 .modal-backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.6); /* Semi-transparent dark background */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 10;
+  z-index: 10; /* Ensures modal sits above other content */
 }
 
+/* ==== Main modal container ==== */
 .modal {
-  background: var(--card-bg);
+  background: var(--card-bg); /* Theme-aware background */
   padding: 2rem;
   border-radius: 15px;
   width: 90%;
   max-width: 500px;
-  color: var(--card-text);
+  color: var(--card-text); /* Theme-aware text */
   position: relative;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); /* Subtle shadow for depth */
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
+/* ==== Close (X) button on modal ==== */
 .modal-close {
   position: absolute;
   top: 1rem;
@@ -34,6 +37,7 @@
   cursor: pointer;
 }
 
+/* ==== Logo or icon inside modal ==== */
 .modal-img {
   width: 60px;
   margin-bottom: 1rem;

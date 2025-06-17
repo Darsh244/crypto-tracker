@@ -4,21 +4,29 @@ import CryptoCard from "./CryptoCard";
 import CryptoModal from "./CryptoModal";
 import "./CryptoList.css";
 
+// Main component to display list of cryptocurrencies
 function CryptoList() {
+  // State for all the coins fetched from the API
   const [coins, setCoins] = useState([]);
+  // User's search query
   const [search, setSearch] = useState("");
+  // Coin selected for modal view
   const [selectedCoin, setSelectedCoin] = useState(null);
+  // Whether data is currently being fetched
   const [loading, setLoading] = useState(false);
-  const [sortKey, setSortKey] = useState("market_cap_desc"); // default
+  // Sort option selected by the user
+  const [sortKey, setSortKey] = useState("market_cap_desc");
+  // Timestamp of last successful update
   const [lastUpdated, setLastUpdated] = useState(null);
 
+  // Fetch coin data when component mounts or sort key changes
   useEffect(() => {
     let intervalId;
 
     const fetchCoins = async () => {
       setLoading(true);
       try {
-        // Only allow descending orders for API params, else default to market_cap_desc
+        // Only allow certain descending sort options to go through API
         const apiSort =
           sortKey.endsWith("_desc") &&
           (sortKey.startsWith("market_cap") ||
@@ -28,6 +36,7 @@ function CryptoList() {
             ? sortKey
             : "market_cap_desc";
 
+        // Get coin data from CoinGecko
         const res = await axios.get(
           "https://api.coingecko.com/api/v3/coins/markets",
           {
@@ -36,12 +45,12 @@ function CryptoList() {
               order: apiSort,
               per_page: 100,
               page: 1,
-              sparkline: true,
+              sparkline: true, // small line chart data
             },
           }
         );
-        setCoins(res.data);
-        setLastUpdated(new Date());
+        setCoins(res.data); // update state
+        setLastUpdated(new Date()); // set time
       } catch (err) {
         console.error("Error fetching data:", err);
       } finally {
@@ -49,23 +58,23 @@ function CryptoList() {
       }
     };
 
-    fetchCoins();
+    fetchCoins(); // initial fetch
 
-    // Set polling interval - fetch new data every 30 seconds
+    // Set up polling to refresh data every 30 seconds
     intervalId = setInterval(fetchCoins, 30000);
 
-    // Cleanup on component unmount or sortKey change
+    // Clean up interval when component unmounts or sort changes
     return () => clearInterval(intervalId);
   }, [sortKey]);
 
-  // Filter by search
+  // Filter coins based on search input
   const filteredCoins = useMemo(() => {
     return coins.filter((coin) =>
       coin.name.toLowerCase().includes(search.toLowerCase())
     );
   }, [coins, search]);
 
-  // Client-side sorting for all ascending sorts and unsupported API sorts
+  // Sort coins based on selected sort option (handled client-side)
   const sortedCoins = useMemo(() => {
     const coinsCopy = [...filteredCoins];
 
@@ -107,6 +116,7 @@ function CryptoList() {
     }
   }, [filteredCoins, sortKey]);
 
+  // List of available sort options for dropdown
   const sortOptions = [
     { label: "Market Cap ↓", value: "market_cap_desc" },
     { label: "Market Cap ↑", value: "market_cap_asc" },
@@ -123,6 +133,7 @@ function CryptoList() {
   return (
     <div className="crypto-container">
       <div className="controls">
+        {/* Search input */}
         <input
           type="text"
           className="search-input"
@@ -131,6 +142,8 @@ function CryptoList() {
           onChange={(e) => setSearch(e.target.value)}
           aria-label="Search cryptocurrencies"
         />
+
+        {/* Sort dropdown */}
         <select
           className="sort-select"
           value={sortKey}
@@ -145,14 +158,18 @@ function CryptoList() {
         </select>
       </div>
 
+      {/* Show loading spinner or coin data */}
       {loading ? (
         <div className="spinner" aria-label="Loading..."></div>
       ) : (
         <>
+          {/* Last updated time */}
           <div className="last-updated">
             Last updated:{" "}
             {lastUpdated ? lastUpdated.toLocaleTimeString() : "..."}
           </div>
+
+          {/* Grid of crypto cards */}
           <div className="crypto-grid">
             {sortedCoins.length > 0 ? (
               sortedCoins.map((coin) => (
@@ -169,11 +186,16 @@ function CryptoList() {
         </>
       )}
 
+      {/* Modal popup with detailed info */}
       {selectedCoin && (
-        <CryptoModal coin={selectedCoin} onClose={() => setSelectedCoin(null)} />
+        <CryptoModal
+          coin={selectedCoin}
+          onClose={() => setSelectedCoin(null)}
+        />
       )}
     </div>
   );
 }
 
 export default CryptoList;
+

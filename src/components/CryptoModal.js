@@ -1,13 +1,27 @@
 import React from "react";
 import "./CryptoModal.css";
 
+// Modal component for displaying detailed information about a cryptocurrency
 function CryptoModal({ coin, onClose }) {
   return (
+    // The dark background behind the modal – clicking it will close the modal
     <div className="modal-backdrop" onClick={onClose}>
+      {/* Stop click events inside the modal from closing it */}
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose}>×</button>
+        {/* Close button (×) in the corner */}
+        <button className="modal-close" onClick={onClose}>
+          ×
+        </button>
+
+        {/* Coin image/logo */}
         <img src={coin.image} alt={coin.name} className="modal-img" />
-        <h2>{coin.name} ({coin.symbol.toUpperCase()})</h2>
+
+        {/* Coin name and ticker symbol */}
+        <h2>
+          {coin.name} ({coin.symbol.toUpperCase()})
+        </h2>
+
+        {/* Various coin stats, formatted with commas */}
         <p>Current Price: ${coin.current_price.toLocaleString()}</p>
         <p>Market Cap: ${coin.market_cap.toLocaleString()}</p>
         <p>24h High: ${coin.high_24h.toLocaleString()}</p>
@@ -20,3 +34,4 @@ function CryptoModal({ coin, onClose }) {
 }
 
 export default CryptoModal;
+
