@@ -13,7 +13,16 @@ A modern, responsive cryptocurrency price tracker built with **React** and power
 
 ## 🖼️ Preview
 
-Coming soon
+## 🖼️ Preview
+
+<img src="./assets/light_mode_list.png" width="600" alt="Screenshot 1">
+<br/>
+<img src="./assets/dark_mode_list.png" width="600" alt="Screenshot 2">
+<br/>
+<img src="./assets/sorting_options.png" width="600" alt="Screenshot 3">
+<br/>
+<img src="./assets/crypto_card.png" width="600" alt="Screenshot 4">
+
 
 ## 🛠️ Tech Stack
 
