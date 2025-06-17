@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import CryptoList from "./components/CryptoList";
+import "./App.css";
 
 function App() {
+  // Dark/light theme state
+  const [darkTheme, setDarkTheme] = useState(() => {
+    // load saved preference or default to dark
+    return localStorage.getItem("darkTheme") === "false" ? false : true;
+  });
+
+  // Save preference
+  useEffect(() => {
+    localStorage.setItem("darkTheme", darkTheme);
+  }, [darkTheme]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div className={darkTheme ? "App dark" : "App light"}>
+      <header>
+        <h1>📈 Live Cryptocurrency Prices</h1>
+        <button
+          className="theme-toggle"
+          onClick={() => setDarkTheme((prev) => !prev)}
+          aria-label="Toggle dark/light theme"
         >
-          Learn React
-        </a>
+          {darkTheme ? "☀️ Light Mode" : "🌙 Dark Mode"}
+        </button>
       </header>
+      <CryptoList />
     </div>
   );
 }

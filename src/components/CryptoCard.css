@@ -1,0 +1,43 @@
+.card {
+  background-color: var(--card-bg);
+  color: var(--card-text);
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  user-select: none;
+  outline-offset: 2px;
+}
+
+.card:hover,
+.card:focus {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  outline: none;
+}
+
+.card-img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 0.5rem;
+}
+
+.green {
+  color: #2ecc71;
+}
+
+.red {
+  color: #e74c3c;
+}
+
+h3 {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 1.1rem;
+}
+
+p {
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+
