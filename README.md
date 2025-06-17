@@ -11,7 +11,6 @@ A modern, responsive cryptocurrency price tracker built with **React** and power
 - 🖱️ **Interactive UI**: Click a card to open detailed coin stats in a modal.
 - 🎨 **Responsive Design**: Mobile-friendly layout with smooth UX.
 
-## 🖼️ Preview
 
 ## 🖼️ Preview
 
